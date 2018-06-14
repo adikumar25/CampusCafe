@@ -4,8 +4,18 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+import static campuscafe.hackathon.campuscafe.Accessibility.HomeActivity.deleteFromCart;
+import static campuscafe.hackathon.campuscafe.Accessibility.HomeActivity.moveLeftCafeteria;
+import static campuscafe.hackathon.campuscafe.Accessibility.HomeActivity.moveRightCafeteria;
+import static campuscafe.hackathon.campuscafe.Accessibility.HomeActivity.readMenuDown;
+import static campuscafe.hackathon.campuscafe.Accessibility.HomeActivity.readMenuUp;
+
 class Android_Gesture_Detector implements GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener {
+
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -15,7 +25,7 @@ class Android_Gesture_Detector implements GestureDetector.OnGestureListener,
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
-        Log.d("Gesture ", " onSingleTapConfirmed");
+        HomeActivity.addToCart();
         return true;
     }
 
@@ -33,6 +43,7 @@ class Android_Gesture_Detector implements GestureDetector.OnGestureListener,
     @Override
     public boolean onDoubleTap(MotionEvent e) {
         Log.d("Gesture ", " onDoubleTap");
+        deleteFromCart();
         return true;
     }
 
@@ -53,32 +64,74 @@ class Android_Gesture_Detector implements GestureDetector.OnGestureListener,
         Log.d("Gesture ", " onScroll");
         if (e1.getY() < e2.getY()){
             Log.d("Gesture ", " Scroll Down");
+//            HomeActivity.readMenuDown();
         }
         if(e1.getY() > e2.getY()){
             Log.d("Gesture ", " Scroll Up");
+//            HomeActivity.readMenuUp();
         }
         return true;
     }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (e1.getX() < e2.getX()) {
-            Log.d("Gesture ", "Left to Right swipe: "+ e1.getX() + " - " + e2.getX());
-            Log.d("Speed ", String.valueOf(velocityX) + " pixels/second");
+
+        try {
+
+            // right to left swipe
+            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                moveRightCafeteria();
+            }
+            // left to right swipe
+            else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                moveLeftCafeteria();
+            }
+            else if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+               readMenuDown();            }
+            // left to right swipe
+            else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                readMenuUp();}
+        } catch (Exception e) {
+
         }
-        if (e1.getX() > e2.getX()) {
-            Log.d("Gesture ", "Right to Left swipe: "+ e1.getX() + " - " + e2.getX());
-            Log.d("Speed ", String.valueOf(velocityX) + " pixels/second");
-        }
-        if (e1.getY() < e2.getY()) {
-            Log.d("Gesture ", "Up to Down swipe: " + e1.getX() + " - " + e2.getX());
-            Log.d("Speed ", String.valueOf(velocityY) + " pixels/second");
-        }
-        if (e1.getY() > e2.getY()) {
-            Log.d("Gesture ", "Down to Up swipe: " + e1.getX() + " - " + e2.getX());
-            Log.d("Speed ", String.valueOf(velocityY) + " pixels/second");
-        }
-        return true;
+
+
+
+
+
+        return false;
+    }
+
+
+
+
+
+//
+//        if (e1.getX() < e2.getX()) {
+//            Log.d("Gesture ", "Left to Right swipe: "+ e1.getX() + " - " + e2.getX());
+//            Log.d("Speed ", String.valueOf(velocityX) + " pixels/second");
+//            moveLeftCafeteria();
+//
+//        }
+//        if (e1.getX() > e2.getX()) {
+//            Log.d("Gesture ", "Right to Left swipe: "+ e1.getX() + " - " + e2.getX());
+//            Log.d("Speed ", String.valueOf(velocityX) + " pixels/second");
+//            moveRightCafeteria();
+//        }
+//        if (e1.getY() < e2.getY()) {
+//            Log.d("Gesture ", "Up to Down swipe: " + e1.getX() + " - " + e2.getX());
+//            Log.d("Speed ", String.valueOf(velocityY) + " pixels/second");
+//            readMenuUp();
+//        }
+//        if (e1.getY() > e2.getY()) {
+//            Log.d("Gesture ", "Down to Up swipe: " + e1.getX() + " - " + e2.getX());
+//            Log.d("Speed ", String.valueOf(velocityY) + " pixels/second");
+//            readMenuDown();
+//        }
+//        return true;
 
     }
-}
