@@ -1,6 +1,7 @@
 package campuscafe.hackathon.campuscafe;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -68,7 +69,26 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, response.toString());
                 try {
                     JSONObject jsonObject=new JSONObject(response);
-                    Log.d(TAG, jsonObject.getString("user-type"));
+                    String res=jsonObject.getString("user-type");
+                    Intent intent;
+                    switch(res)
+                    {
+                        case "customer":
+                             intent=new Intent(getApplicationContext(), CustomerHomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                             break;
+
+                        case "vendor":
+                            intent=new Intent(getApplicationContext(),VendorHomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                            break;
+                        case "not-exist" :
+                            Toast.makeText(getApplicationContext(),"No User Exist",Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
