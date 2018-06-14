@@ -13,21 +13,23 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
+
+        </activity>
+        <activity android:name=".VendorHomeActivity" />
+        <activity android:name=".EditMenuActivity" />
+        <activity android:name=".OrderActivity" />
+        <activity
+            android:name=".NotificationActivity"
+            android:label="@string/title_activity_notification" />
+        <activity android:name=".CustomerHomeActivity" />
+        <activity android:name=".SuggestionActivity" />
+        <activity android:name=".Accessibility.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VendorHomeActivity" />
-        <activity android:name=".EditMenuActivity" />
-        <activity
-            android:name=".OrderActivity" />
-        <activity
-            android:name=".NotificationActivity"
-            android:label="@string/title_activity_notification" />
-        <activity android:name=".CustomerHomeActivity" />
-        <activity android:name=".SuggestionActivity"></activity>
     </application>
 
 </manifest>
