@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".VendorHomeActivity" />
         <activity android:name=".EditMenuActivity" />
-        <activity android:name=".OrderActivity" />
+        <activity
+            android:name=".OrderActivity" />
         <activity
             android:name=".NotificationActivity"
             android:label="@string/title_activity_notification" />
