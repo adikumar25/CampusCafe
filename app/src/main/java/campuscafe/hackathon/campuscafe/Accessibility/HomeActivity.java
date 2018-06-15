@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        readCafeteria(cafeID);
+        readText("Hello welcome to Campus Cafe. You are at Cafe 1");
 
         RelativeLayout TextLoggerLayout = (RelativeLayout)findViewById(R.id.rl);
         TextLoggerLayout.setOnTouchListener(
